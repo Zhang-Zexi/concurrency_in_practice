@@ -1,4 +1,4 @@
-package threadcoreknowledge.wrongways;
+package threadcoreknowledge.createthreads.wrongways;
 
 import lombok.extern.slf4j.Slf4j;
 

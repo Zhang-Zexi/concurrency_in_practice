@@ -1,4 +1,4 @@
-package threadcoreknowledge.wrongways;
+package threadcoreknowledge.createthreads.wrongways;
 
 /**
  * @ClassName Lambda
