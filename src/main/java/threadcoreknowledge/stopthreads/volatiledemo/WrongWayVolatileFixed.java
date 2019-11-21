@@ -30,6 +30,7 @@ public class WrongWayVolatileFixed {
         // 一旦消费不需要更多数据了，我们应该让生产者也停下来，但是实际情况
 //        producer.canceled = true;
         productThread.interrupt();
+        Thread.interrupted();
         System.out.println(producer.canceled);
     }
 
