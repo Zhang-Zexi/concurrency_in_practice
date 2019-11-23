@@ -9,17 +9,24 @@ package jmm;
  **/
 public class FieldVisibility {
 
-    volatile int a = 1;
+    int a = 1;
+    int abc = 1;
+    int  abcd = 1;
     volatile int b = 2;
 
     private void change() {
+        abc = 7;
+        abcd = 70;
         a = 3;
-        b = a;
+        b = 0;// 起到触发器的作用
     }
 
 
     private void print() {
-        System.out.println("b=" + b + ";a=" + a);
+        if (b == 0) {// 根据happen-before原则，它一定能看到写入之前的操作
+            // 这样的打印的值a,abc,abcd都是最新的，这样就起到了触发器的作用
+            System.out.println("b=" + b + ";a=" + a);
+        }
     }
 
     public static void main(String[] args) {
