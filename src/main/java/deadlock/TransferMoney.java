@@ -13,6 +13,7 @@ public class TransferMoney implements Runnable {
 
     static Account a = new Account(500);
     static Account b = new Account(500);
+    static Object lock = new Object();
 
     public static void main(String[] args) throws InterruptedException {
         TransferMoney r1 = new TransferMoney();
@@ -39,20 +40,40 @@ public class TransferMoney implements Runnable {
         }
     }
 
-    private static void transferMoney(Account from, Account to, int amount) {
-        synchronized (from) {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            synchronized (to) {
+    public static void transferMoney(Account from, Account to, int amount) {
+        class Helper {
+
+            public void transfer() {
                 if (from.balance - amount < 0) {
                     System.out.println("余额不足，转账失败");
                 }
                 from.balance -= amount;
                 to.balance += amount;
                 System.out.println("成功转账" + amount + "元");
+            }
+        }
+        int fromHash = System.identityHashCode(from);
+        int toHash = System.identityHashCode(to);
+        if (fromHash < toHash) {
+            synchronized (from) {
+                synchronized (to) {
+                    new Helper().transfer();
+                }
+            }
+        }
+        else if (fromHash > toHash) {
+            synchronized (from) {
+                synchronized (to) {
+                    new Helper().transfer();
+                }
+            }
+        } else {
+            synchronized (lock) {// 加时赛
+                synchronized (to) {
+                    synchronized (from) {
+                        new Helper().transfer();
+                    }
+                }
             }
         }
     }
