@@ -1,5 +1,7 @@
 package jmm;
 
+import singleton.Singleton8;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -15,6 +17,7 @@ public class UseVolatile1 implements Runnable {
     AtomicInteger readA = new AtomicInteger();
 
     public static void main(String[] args) throws InterruptedException {
+//        Singleton8.INSTACNE.whatever(); 单例的写法
         Runnable r = new UseVolatile1();
         Thread thread1 = new Thread(r);
         Thread thread2 = new Thread(r);
