@@ -29,10 +29,10 @@ public class CantCatchDirectly implements Runnable {
     }
     @Override
     public void run() {
-        try {
+//        try {
             throw new RuntimeException();
-        } catch(RuntimeException e) {
-            System.out.println("Caught Exception.");
-        }
+//        } catch(RuntimeException e) {
+//            System.out.println("Caught Exception.");
+//        }
     }
 }
